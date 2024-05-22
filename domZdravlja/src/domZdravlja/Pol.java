@@ -1,5 +1,5 @@
 package domZdravlja;
-
 public enum Pol {
-MUSKI,ZENSKI
+    MUSKI, ZENSKI;
 }
+

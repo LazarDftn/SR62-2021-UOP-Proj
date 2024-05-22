@@ -1,15 +1,21 @@
 package UI;
 
 import javax.swing.*;
+
+import domZdravlja.Osoba;
+import domZdravlja.Termin;
+import domZdravlja.ZdravstveniKarton;
+
 import java.awt.*;
 import java.awt.event.*;
+import java.util.List;
 
 public class LoginProzor extends JFrame {
     private JTextField korisnickoImeField;
     private JPasswordField lozinkaField;
     private JButton prijavaButton;
 
-    public LoginProzor() {
+    public LoginProzor(List<Osoba> korisnici, List<Termin> termini, List<ZdravstveniKarton> kartoni) {
         setTitle("Prijava");
         setSize(300, 200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -36,14 +42,14 @@ public class LoginProzor extends JFrame {
         setVisible(true);
     }
 
-    private void prijava() {
+    public LoginProzor() {
+		// TODO Auto-generated constructor stub
+	}
+
+	private void prijava() {
         String korisnickoIme = korisnickoImeField.getText();
         String lozinka = new String(lozinkaField.getPassword());
 
-        // Ovde bi se dodala logika za proveru identiteta korisnika
-        // Na primer, poziv metode koja proverava korisničko ime i lozinku
-
-        // Simulacija: ako je korisničko ime "admin", otvara se prozor za administratora
         if (korisnickoIme.equals("admin")) {
             new GlavniProzorAdministrator();
         } else {

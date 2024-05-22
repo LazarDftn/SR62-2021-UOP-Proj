@@ -3,7 +3,7 @@ package domZdravlja;
 public class Pacijent extends Osoba {
     private ZdravstveniKarton zdravstveniKarton;
 
-    public Pacijent(String ime, String prezime, String jmbg, char pol, String adresa, String telefon, String korisnickoIme, String lozinka, ZdravstveniKarton zdravstveniKarton) {
+    public Pacijent(String ime, String prezime, String jmbg, Pol pol, String adresa, String telefon, String korisnickoIme, String lozinka, ZdravstveniKarton zdravstveniKarton) {
         super(ime, prezime, jmbg, pol, adresa, telefon, korisnickoIme, lozinka, "Pacijent");
         this.zdravstveniKarton = zdravstveniKarton;
     }

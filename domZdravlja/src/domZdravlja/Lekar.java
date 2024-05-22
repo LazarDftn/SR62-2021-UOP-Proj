@@ -1,7 +1,7 @@
 package domZdravlja;
 
 public class Lekar extends Osoba {
-    public Lekar(String ime, String prezime, String jmbg, char pol, String adresa, String telefon, String korisnickoIme, String lozinka) {
+    public Lekar(String ime, String prezime, String jmbg, Pol pol, String adresa, String telefon, String korisnickoIme, String lozinka) {
         super(ime, prezime, jmbg, pol, adresa, telefon, korisnickoIme, lozinka, "Lekar");
     }
     public Termin kreirajTermin(Pacijent pacijent, String datum, String opisTerapije) {

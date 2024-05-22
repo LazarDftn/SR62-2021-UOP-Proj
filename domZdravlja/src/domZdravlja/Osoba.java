@@ -23,7 +23,17 @@ public abstract class Osoba {
         this.uloga = uloga;
     }
 
-        public String getIme() {
+        public Osoba(String ime2, String prezime2, String jmbg2, Pol pol2, String adresa2, String telefon2,
+			String korisnickoIme2, String lozinka2) {
+		// TODO Auto-generated constructor stub
+	}
+
+		public Osoba(String ime2, String prezime2, String jmbg2, Pol pol2, String adresa2, String telefon2,
+				String korisnickoIme2, String lozinka2, String uloga2) {
+			// TODO Auto-generated constructor stub
+		}
+
+		public String getIme() {
             return ime;
         }
 
