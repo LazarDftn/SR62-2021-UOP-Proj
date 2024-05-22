@@ -4,14 +4,14 @@ public abstract class Osoba {
     protected String ime;
     protected String prezime;
     protected String jmbg;
-    protected char pol;
+    protected Pol pol;
     protected String adresa;
     protected String telefon;
     protected String korisnickoIme;
     protected String lozinka;
-    protected String uloga;
+    protected Uloga uloga;
 
-    public Osoba(String ime, String prezime, String jmbg, char pol, String adresa, String telefon, String korisnickoIme, String lozinka, String uloga) {
+    public Osoba(String ime, String prezime, String jmbg, Pol pol, String adresa, String telefon, String korisnickoIme, String lozinka, Uloga uloga) {
         this.ime = ime;
         this.prezime = prezime;
         this.jmbg = jmbg;
@@ -23,15 +23,6 @@ public abstract class Osoba {
         this.uloga = uloga;
     }
 
-        public Osoba(String ime2, String prezime2, String jmbg2, Pol pol2, String adresa2, String telefon2,
-			String korisnickoIme2, String lozinka2) {
-		// TODO Auto-generated constructor stub
-	}
-
-		public Osoba(String ime2, String prezime2, String jmbg2, Pol pol2, String adresa2, String telefon2,
-				String korisnickoIme2, String lozinka2, String uloga2) {
-			// TODO Auto-generated constructor stub
-		}
 
 		public String getIme() {
             return ime;
@@ -45,7 +36,7 @@ public abstract class Osoba {
             return jmbg;
         }
 
-        public char getPol() {
+        public Pol getPol() {
             return pol;
         }
 
@@ -65,7 +56,7 @@ public abstract class Osoba {
             return lozinka;
         }
 
-        public String getUloga() {
+        public Uloga getUloga() {
             return uloga;
         }
 
@@ -81,7 +72,7 @@ public abstract class Osoba {
             this.jmbg = jmbg;
         }
 
-        public void setPol(char pol) {
+        public void setPol(Pol pol) {
             this.pol = pol;
         }
 
@@ -100,6 +91,19 @@ public abstract class Osoba {
         public void setLozinka(String lozinka) {
             this.lozinka = lozinka;
         }
+
+		public String getJmbg() {
+			return jmbg;
+		}
+
+		public void setJmbg(String jmbg) {
+			this.jmbg = jmbg;
+		}
+
+		public void setUloga(Uloga uloga) {
+			this.uloga = uloga;
+		}
+        
     }
 
 

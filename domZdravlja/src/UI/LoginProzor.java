@@ -2,9 +2,11 @@ package UI;
 
 import javax.swing.*;
 
+import domZdravlja.DatotekaManager;
 import domZdravlja.Osoba;
 import domZdravlja.Termin;
 import domZdravlja.ZdravstveniKarton;
+
 
 import java.awt.*;
 import java.awt.event.*;
@@ -15,7 +17,7 @@ public class LoginProzor extends JFrame {
     private JPasswordField lozinkaField;
     private JButton prijavaButton;
 
-    public LoginProzor(List<Osoba> korisnici, List<Termin> termini, List<ZdravstveniKarton> kartoni) {
+    public LoginProzor() {
         setTitle("Prijava");
         setSize(300, 200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -42,15 +44,16 @@ public class LoginProzor extends JFrame {
         setVisible(true);
     }
 
-    public LoginProzor() {
-		// TODO Auto-generated constructor stub
-	}
 
 	private void prijava() {
-        String korisnickoIme = korisnickoImeField.getText();
-        String lozinka = new String(lozinkaField.getPassword());
+		
+		boolean result = DatotekaManager.ulogujSe(korisnickoImeField.getText(), new String(lozinkaField.getPassword()));
+		if (result) {
+        	LoginProzor.this.dispose();
+        	LoginProzor.this.setVisible(false);
 
-        if (korisnickoIme.equals("admin")) {
+			GlavniProzorAdministrator glavniAdminProzor = new GlavniProzorAdministrator();
+			glavniAdminProzor.setVisible(true);
             new GlavniProzorAdministrator();
         } else {
             JOptionPane.showMessageDialog(this, "Pogrešno korisničko ime ili lozinka!", "Greška", JOptionPane.ERROR_MESSAGE);
@@ -58,6 +61,7 @@ public class LoginProzor extends JFrame {
     }
 
     public static void main(String[] args) {
+    	DatotekaManager.ucitaj();
         new LoginProzor();
     }
 }
