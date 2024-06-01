@@ -1,6 +1,7 @@
 package domZdravlja;
 
 public abstract class Osoba {
+    protected int id;
     protected String ime;
     protected String prezime;
     protected String jmbg;
@@ -11,7 +12,8 @@ public abstract class Osoba {
     protected String lozinka;
     protected Uloga uloga;
 
-    public Osoba(String ime, String prezime, String jmbg, Pol pol, String adresa, String telefon, String korisnickoIme, String lozinka, Uloga uloga) {
+    public Osoba(int id, String ime, String prezime, String jmbg, Pol pol, String adresa, String telefon, String korisnickoIme, String lozinka, Uloga uloga) {
+        this.id = id;  
         this.ime = ime;
         this.prezime = prezime;
         this.jmbg = jmbg;
@@ -23,87 +25,42 @@ public abstract class Osoba {
         this.uloga = uloga;
     }
 
-
-		public String getIme() {
-            return ime;
-        }
-
-        public String getPrezime() {
-            return prezime;
-        }
-
-        public String getJMBG() {
-            return jmbg;
-        }
-
-        public Pol getPol() {
-            return pol;
-        }
-
-        public String getAdresa() {
-            return adresa;
-        }
-
-        public String getTelefon() {
-            return telefon;
-        }
-
-        public String getKorisnickoIme() {
-            return korisnickoIme;
-        }
-
-        public String getLozinka() {
-            return lozinka;
-        }
-
-        public Uloga getUloga() {
-            return uloga;
-        }
-
-        public void setIme(String ime) {
-            this.ime = ime;
-        }
-
-        public void setPrezime(String prezime) {
-            this.prezime = prezime;
-        }
-
-        public void setJMBG(String jmbg) {
-            this.jmbg = jmbg;
-        }
-
-        public void setPol(Pol pol) {
-            this.pol = pol;
-        }
-
-        public void setAdresa(String adresa) {
-            this.adresa = adresa;
-        }
-
-        public void setTelefon(String telefon) {
-            this.telefon = telefon;
-        }
-
-        public void setKorisnickoIme(String korisnickoIme) {
-            this.korisnickoIme = korisnickoIme;
-        }
-
-        public void setLozinka(String lozinka) {
-            this.lozinka = lozinka;
-        }
-
-		public String getJmbg() {
-			return jmbg;
-		}
-
-		public void setJmbg(String jmbg) {
-			this.jmbg = jmbg;
-		}
-
-		public void setUloga(Uloga uloga) {
-			this.uloga = uloga;
-		}
-        
+    public int getId() {
+        return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String toCSVString() {
+        return id + "," + ime + "," + prezime + "," + jmbg + "," + pol.ordinal() + "," + adresa + "," + telefon + "," + korisnickoIme + "," + lozinka + "," + uloga.ordinal();
+    }
+    public String getIme() { return ime; }
+    public void setIme(String ime) { this.ime = ime; }
+
+    public String getPrezime() { return prezime; }
+    public void setPrezime(String prezime) { this.prezime = prezime; }
+
+    public String getJmbg() { return jmbg; }
+    public void setJmbg(String jmbg) { this.jmbg = jmbg; }
+
+    public Pol getPol() { return pol; }
+    public void setPol(Pol pol) { this.pol = pol; }
+
+    public String getAdresa() { return adresa; }
+    public void setAdresa(String adresa) { this.adresa = adresa; }
+
+    public String getTelefon() { return telefon; }
+    public void setTelefon(String telefon) { this.telefon = telefon; }
+
+    public String getKorisnickoIme() { return korisnickoIme; }
+    public void setKorisnickoIme(String korisnickoIme) { this.korisnickoIme = korisnickoIme; }
+
+    public String getLozinka() { return lozinka; }
+    public void setLozinka(String lozinka) { this.lozinka = lozinka; }
+
+    public Uloga getUloga() { return uloga; }
+    public void setUloga(Uloga uloga) { this.uloga = uloga; }
+}
 

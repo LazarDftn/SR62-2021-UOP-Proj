@@ -3,10 +3,8 @@ package domZdravlja;
 public class Pacijent extends Osoba {
     private ZdravstveniKarton zdravstveniKarton;
 
-    public Pacijent(String ime, String prezime, String jmbg, Pol pol, String adresa, String telefon, String korisnickoIme, String lozinka, Uloga uloga) {
-    	
-        super(ime, prezime, jmbg, pol, adresa, telefon, korisnickoIme, lozinka, uloga);
-       // this.zdravstveniKarton = zdravstveniKarton;
+    public Pacijent(int id, String ime, String prezime, String jmbg, Pol pol, String adresa, String telefon, String korisnickoIme, String lozinka, Uloga uloga) {
+        super(id, ime, prezime, jmbg, pol, adresa, telefon, korisnickoIme, lozinka, uloga);
     }
 
     public ZdravstveniKarton getZdravstveniKarton() {
@@ -17,12 +15,21 @@ public class Pacijent extends Osoba {
         this.zdravstveniKarton = zdravstveniKarton;
     }
 
-
     public void dodajTermin(Termin termin) {
-        this.zdravstveniKarton.dodajTermin(termin);
+        if (this.zdravstveniKarton != null) {
+            this.zdravstveniKarton.dodajTermin(termin);
+        }
     }
 
     public void ukloniTermin(Termin termin) {
-        this.zdravstveniKarton.ukloniTermin(termin);
+        if (this.zdravstveniKarton != null) {
+            this.zdravstveniKarton.ukloniTermin(termin);
+        }
+    }
+
+    @Override
+    public String toCSVString() {
+      
+        return getId() + "," + getIme() + "," + getPrezime() + "," + getJmbg() + "," + getPol().ordinal() + "," + getAdresa() + "," + getTelefon() + "," + getKorisnickoIme() + "," + getLozinka() + "," + getUloga().ordinal();
     }
 }
