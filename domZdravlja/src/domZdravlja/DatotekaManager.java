@@ -60,7 +60,7 @@ public class DatotekaManager {
                 String telefon = info[8];
                 Uloga uloga = Uloga.values()[Integer.parseInt(info[9])];
                 
-                Osoba osoba = null; 
+                Osoba osoba = null;
                 if (uloga == Uloga.ADMIN) {
                     osoba = new Administrator(id, ime, prezime, jmbg, pol, adresa, telefon, korisnickoIme, lozinka, uloga);
                 } else if (uloga == Uloga.PACIJENT) {
@@ -74,9 +74,8 @@ public class DatotekaManager {
             } catch (Exception e) {
                 System.err.println("Nevalidan unos u CSV fajlu: " + e.getMessage());
             }
-            
         }
-    
+    }
 
     public void sacuvajKorisnike() throws IOException {
         List<String> linije = new ArrayList<>();
@@ -87,8 +86,8 @@ public class DatotekaManager {
     }
 
     public void dodajKorisnika(Osoba osoba) {
-        int id = nextId++;
-        osoba.setId(id);  
+        int id = nextUserId++;
+        osoba.setId(id);
         korisnici.put(id, osoba);
         try {
             sacuvajKorisnike();
@@ -137,6 +136,7 @@ public class DatotekaManager {
         }
         Files.write(TERMINI_PUTANJA, linije);
     }
+    
     private static void ucitajTermine() throws IOException {
         List<String> linije = Files.readAllLines(TERMINI_PUTANJA);
         for (String linija : linije) {
@@ -162,25 +162,36 @@ public class DatotekaManager {
         }
     }
 
-
     public void dodajTermin(Termin termin) {
         int id = nextTerminId++;
         termin.setId(id);
         termini.put(id, termin);
-        sacuvajTermine();
+        try {
+            sacuvajTermine();
+        } catch (IOException e) {
+            System.err.println("Greška prilikom čuvanja termina: " + e.getMessage());
+        }
     }
 
     public void azurirajTermin(int id, Termin noviTermin) {
         if (termini.containsKey(id)) {
             termini.put(id, noviTermin);
-            sacuvajTermine();
+            try {
+                sacuvajTermine();
+            } catch (IOException e) {
+                System.err.println("Greška prilikom ažuriranja termina: " + e.getMessage());
+            }
         }
     }
 
     public void obrisiTermin(int id) {
         if (termini.containsKey(id)) {
             termini.remove(id);
-            sacuvajTermine();
+            try {
+                sacuvajTermine();
+            } catch (IOException e) {
+                System.err.println("Greška prilikom brisanja termina: " + e.getMessage());
+            }
         }
     }
 
@@ -227,22 +238,32 @@ public class DatotekaManager {
         int id = nextKartonId++;
         karton.setId(id);
         kartoni.put(id, karton);
-        sacuvajKartone();
+        try {
+            sacuvajKartone();
+        } catch (IOException e) {
+            System.err.println("Greška prilikom čuvanja zdravstvenih kartona: " + e.getMessage());
+        }
     }
 
     public void azurirajKarton(int id, ZdravstveniKarton noviKarton) {
         if (kartoni.containsKey(id)) {
             kartoni.put(id, noviKarton);
-            sacuvajKartone();
+            try {
+                sacuvajKartone();
+            } catch (IOException e) {
+                System.err.println("Greška prilikom ažuriranja zdravstvenih kartona: " + e.getMessage());
+            }
         }
     }
 
     public void obrisiKarton(int id) {
         if (kartoni.containsKey(id)) {
             kartoni.remove(id);
-            sacuvajKartone();
+            try {
+                sacuvajKartone();
+            } catch (IOException e) {
+                System.err.println("Greška prilikom brisanja zdravstvenih kartona: " + e.getMessage());
+            }
         }
     }
-
-    // Metoda ulogujSe ostaje ista
 }
