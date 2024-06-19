@@ -3,9 +3,9 @@ package domZdravlja;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
 public class ZdravstveniKarton {
-    private int id;
+	
+    private int id; 
     private ArrayList<Termin> termini;
     private Pacijent pacijent;
 
@@ -27,9 +27,8 @@ public class ZdravstveniKarton {
         return new ArrayList<>(termini);
     }
 
-    // Dodavanje metode setTermini
-    public void setTermini(List<Termin> noviTermini) {
-        this.termini = new ArrayList<>(noviTermini); // Postavljanje nove liste termina
+    public void setTermini(List<Termin> termini) {
+        this.termini = new ArrayList<>(termini);
     }
 
     public int getId() {
@@ -48,11 +47,15 @@ public class ZdravstveniKarton {
         this.pacijent = pacijent;
     }
 
-    public String toCSVString() {
-        String terminiIds = termini.stream()
+    public String getTerminiIds() {
+        return termini.stream()
             .map(Termin::getId)
             .map(String::valueOf)
             .collect(Collectors.joining(";"));
+    }
+
+    public String toCSVString() {
+        String terminiIds = getTerminiIds();
         return id + "," + pacijent.getId() + "," + terminiIds;
     }
 }

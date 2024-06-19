@@ -1,16 +1,13 @@
 package UI;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import domZdravlja.DatotekaManager;
 import domZdravlja.Osoba;
-import domZdravlja.Termin;
-import domZdravlja.ZdravstveniKarton;
-
-
-import java.awt.*;
-import java.awt.event.*;
-import java.util.List;
+import domZdravlja.Uloga;
 
 public class LoginProzor extends JFrame {
     private JTextField korisnickoImeField;
@@ -44,24 +41,29 @@ public class LoginProzor extends JFrame {
         setVisible(true);
     }
 
+    private void prijava() {
+        boolean result = DatotekaManager.ulogujSe(korisnickoImeField.getText(), new String(lozinkaField.getPassword()));
+        if (result) {
+            Osoba ulogovanKorisnik = DatotekaManager.getUlogovanKorisnik();
+            Uloga uloga = ulogovanKorisnik.getUloga();
 
-	private void prijava() {
-		
-		boolean result = DatotekaManager.ulogujSe(korisnickoImeField.getText(), new String(lozinkaField.getPassword()));
-		if (result) {
-        	LoginProzor.this.dispose();
-        	LoginProzor.this.setVisible(false);
+            LoginProzor.this.dispose();
+            LoginProzor.this.setVisible(false);
 
-			GlavniProzorAdministrator glavniAdminProzor = new GlavniProzorAdministrator();
-			glavniAdminProzor.setVisible(true);
-            new GlavniProzorAdministrator();
+            if (uloga == Uloga.ADMIN) {
+                new GlavniProzorAdministrator().setVisible(true);
+            } else if (uloga == Uloga.LEKAR) {
+                new GlavniProzorLekar().setVisible(true);
+            } else if (uloga == Uloga.PACIJENT) {
+                new GlavniProzorPacijent().setVisible(true);
+            }
         } else {
             JOptionPane.showMessageDialog(this, "Pogrešno korisničko ime ili lozinka!", "Greška", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     public static void main(String[] args) {
-    	DatotekaManager.ucitaj();
+        DatotekaManager.ucitaj();
         new LoginProzor();
     }
 }

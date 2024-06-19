@@ -11,7 +11,7 @@ public abstract class Osoba {
     protected String korisnickoIme;
     protected String lozinka;
     protected Uloga uloga;
-
+    
     public Osoba(int id, String ime, String prezime, String jmbg, Pol pol, String adresa, String telefon, String korisnickoIme, String lozinka, Uloga uloga) {
         this.id = id;  
         this.ime = ime;

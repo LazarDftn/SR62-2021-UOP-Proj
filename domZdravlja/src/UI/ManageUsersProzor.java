@@ -1,6 +1,7 @@
 package UI;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,17 +12,31 @@ import domZdravlja.Lekar;
 import domZdravlja.Pacijent;
 import domZdravlja.Pol;
 import domZdravlja.Uloga;
+import java.util.List;
 
 public class ManageUsersProzor extends JFrame {
-    public ManageUsersProzor() {
+    private JTable usersTable;
+    private DefaultTableModel tableModel;
+    private JFrame parentFrame;
+
+    public ManageUsersProzor(JFrame parentFrame) {
+        this.parentFrame = parentFrame;
         setTitle("Upravljaj korisnicima");
-        setSize(500, 400);
+        setSize(600, 400);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
-        setLayout(new GridLayout(0, 1)); 
+        setLayout(new BorderLayout());
 
         JLabel label = new JLabel("Upravljanje korisnicima");
-        add(label);
+        add(label, BorderLayout.NORTH);
+
+        tableModel = new DefaultTableModel();
+        usersTable = new JTable(tableModel);
+        JScrollPane scrollPane = new JScrollPane(usersTable);
+        add(scrollPane, BorderLayout.CENTER);
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(1, 4));
 
         JButton addUserButton = new JButton("Dodaj korisnika");
         addUserButton.addActionListener(new ActionListener() {
@@ -29,7 +44,7 @@ public class ManageUsersProzor extends JFrame {
                 dodajKorisnika();
             }
         });
-        add(addUserButton);
+        buttonPanel.add(addUserButton);
 
         JButton updateUserButton = new JButton("Ažuriraj korisnika");
         updateUserButton.addActionListener(new ActionListener() {
@@ -37,7 +52,7 @@ public class ManageUsersProzor extends JFrame {
                 azurirajKorisnika();
             }
         });
-        add(updateUserButton);
+        buttonPanel.add(updateUserButton);
 
         JButton deleteUserButton = new JButton("Obriši korisnika");
         deleteUserButton.addActionListener(new ActionListener() {
@@ -45,13 +60,23 @@ public class ManageUsersProzor extends JFrame {
                 obrisiKorisnika();
             }
         });
-        add(deleteUserButton);
+        buttonPanel.add(deleteUserButton);
 
+        JButton backButton = new JButton("Nazad");
+        backButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                parentFrame.setVisible(true);
+            }
+        });
+        buttonPanel.add(backButton);
+
+        add(buttonPanel, BorderLayout.SOUTH);
+        osveziTabelu();
         setVisible(true);
     }
 
     private void dodajKorisnika() {
-
         JTextField imeField = new JTextField();
         JTextField prezimeField = new JTextField();
         JTextField jmbgField = new JTextField();
@@ -76,7 +101,6 @@ public class ManageUsersProzor extends JFrame {
 
         int option = JOptionPane.showConfirmDialog(null, inputFields, "Dodaj korisnika", JOptionPane.OK_CANCEL_OPTION);
         if (option == JOptionPane.OK_OPTION) {
-
             Osoba novaOsoba = null;
             String ime = imeField.getText();
             String prezime = prezimeField.getText();
@@ -99,6 +123,7 @@ public class ManageUsersProzor extends JFrame {
             if (novaOsoba != null) {
                 DatotekaManager.dodajKorisnika(novaOsoba);
                 JOptionPane.showMessageDialog(null, "Korisnik uspešno dodat.");
+                osveziTabelu();
             } else {
                 JOptionPane.showMessageDialog(null, "Greška prilikom dodavanja korisnika.");
             }
@@ -151,11 +176,11 @@ public class ManageUsersProzor extends JFrame {
 
             DatotekaManager.azurirajKorisnika(korisnik.getId(), korisnik);
             JOptionPane.showMessageDialog(null, "Korisnik uspešno ažuriran.");
+            osveziTabelu();
         }
     }
 
     private void obrisiKorisnika() {
-        // Implementacija brisanja korisnika
         String korisnickoIme = JOptionPane.showInputDialog("Unesite korisničko ime korisnika za brisanje:");
         Osoba korisnik = DatotekaManager.nadjiKorisnikaPoKorisnickomImenu(korisnickoIme);
         if (korisnik == null) {
@@ -167,6 +192,30 @@ public class ManageUsersProzor extends JFrame {
         if (option == JOptionPane.YES_OPTION) {
             DatotekaManager.obrisiKorisnika(korisnik.getId());
             JOptionPane.showMessageDialog(null, "Korisnik uspešno obrisan.");
+            osveziTabelu();
+        }
+    }
+
+    private void osveziTabelu() {
+        String[] columnNames = {"ID", "Ime", "Prezime", "JMBG", "Pol", "Adresa", "Telefon", "Korisničko ime", "Lozinka", "Uloga"};
+        tableModel.setRowCount(0);
+        tableModel.setColumnIdentifiers(columnNames);
+
+        List<Osoba> korisnici = DatotekaManager.sviKorisnici();
+        for (Osoba korisnik : korisnici) {
+            Object[] rowData = {
+                korisnik.getId(),
+                korisnik.getIme(),
+                korisnik.getPrezime(),
+                korisnik.getJmbg(),
+                korisnik.getPol(),
+                korisnik.getAdresa(),
+                korisnik.getTelefon(),
+                korisnik.getKorisnickoIme(),
+                korisnik.getLozinka(),
+                korisnik.getUloga()
+            };
+            tableModel.addRow(rowData);
         }
     }
 }

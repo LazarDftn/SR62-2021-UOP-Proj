@@ -1,7 +1,7 @@
 package domZdravlja;
 
 public class Termin {
-    private int id; // Dodavanje ID-a za termin
+    private int id;
     private Lekar lekar;
     private Pacijent pacijent;
     private String datum;
@@ -9,7 +9,7 @@ public class Termin {
     private String opisTerapije;
 
     public Termin(int id, Lekar lekar, Pacijent pacijent, String datum, Status status, String opisTerapije) {
-        this.id = id;  // Postavljanje ID-a
+        this.id = id;
         this.lekar = lekar;
         this.pacijent = pacijent;
         this.datum = datum;
@@ -17,7 +17,6 @@ public class Termin {
         this.opisTerapije = opisTerapije;
     }
 
-    // Getters and Setters
     public int getId() {
         return id;
     }
@@ -65,7 +64,6 @@ public class Termin {
     public void setOpisTerapije(String opisTerapije) {
         this.opisTerapije = opisTerapije;
     }
-
 
     public String toCSVString() {
         return id + "," + lekar.getId() + "," + pacijent.getId() + "," + datum + "," + status.ordinal() + "," + opisTerapije;
